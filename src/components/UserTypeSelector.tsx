@@ -1,7 +1,7 @@
 import React from 'react';
 import { GraduationCap, Users, ShieldCheck } from 'lucide-react';
 
-export type UserType = 'learner' | 'coordinator' | 'admin';
+export type UserType = 'intern' | 'coordinator' | 'admin';
 
 interface UserTypeSelectorProps {
   selectedType: UserType;
@@ -15,11 +15,11 @@ const UserTypeSelector: React.FC<UserTypeSelectorProps> = ({
   return (
     <div className="flex justify-center space-x-4 md:space-x-8 mb-8">
       <UserTypeOption
-        type="learner"
-        label="Learner"
+        type="intern"
+        label="Intern"
         icon={<GraduationCap className="w-6 h-6" />}
-        isSelected={selectedType === 'learner'}
-        onClick={() => onSelectType('learner')}
+        isSelected={selectedType === 'intern'}
+        onClick={() => onSelectType('intern')}
       />
       <UserTypeOption
         type="coordinator"

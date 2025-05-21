@@ -5,9 +5,10 @@ import LearnerDashboard from './pages/LearnerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import UserManagement from './pages/UserManagement';
 import AssignCoordinator from './pages/AssignCoordinator';
-import PythonCourse from './pages/PythonCourse';
-import PythonLab from './pages/PythonLab';
+import CourseDashboard from './pages/CourseDashboard';
 import CoordinatorDashboard from './pages/CoordinatorDashboard';
+import QuizPage from './pages/QuizPage';
+import AssignmentView from './pages/AssignmentView'; // Import the new component
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -59,24 +60,28 @@ function App() {
           } 
         />
         <Route 
-          path="/course/python/unit/:unitId" 
+          path="/course/:courseName/unit/:unitId" // Made courseName dynamic
           element={
             isLoggedIn ? (
-              <PythonCourse onLogout={handleLogout} />
+              <CourseDashboard onLogout={handleLogout} />
             ) : (
               <Navigate to="/" replace />
             )
-          } 
+          }
         />
-        <Route 
-          path="/course/python/lab/:unitId" 
+        <Route
+          path="/quiz"
           element={
             isLoggedIn ? (
-              <PythonLab onLogout={handleLogout} />
+              <QuizPage />
             ) : (
               <Navigate to="/" replace />
-            )
-          } 
+            )}
+        />
+         {/* New route for AssignmentView */}
+        <Route
+          path="/assignment-view"
+          element={<AssignmentView />}
         />
       </Routes>
     </Router>

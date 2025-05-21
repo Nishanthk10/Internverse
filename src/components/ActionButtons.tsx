@@ -21,7 +21,6 @@ const ActionButtons: React.FC = () => {
           <div className="flex gap-3">
             <Badge name="PYTHON" />
             <Badge name="SQL" />
-            <Badge name="GIT" />
           </div>
         </div>
       </div>
@@ -29,16 +28,30 @@ const ActionButtons: React.FC = () => {
   );
 };
 
-const Badge: React.FC<{ name: string }> = ({ name }) => (
-  <div className="flex flex-col items-center">
-    <div className="w-8 h-8 rounded-full border-2 border-[#8b5cf6]/20 hover:border-[#8b5cf6]/40 transition-all duration-300 flex items-center justify-center overflow-hidden">
-      <img 
-        src={`https://cdn.jsdelivr.net/gh/stackblitz/internverse-assets/${name.toLowerCase()}-logo.png`}
-        alt={name}
-        className="w-5 h-5 object-contain"
-      />
+const Badge: React.FC<{ name: string }> = ({ name }) => {
+  // Determine local asset path based on badge name
+  const getAssetPath = (badgeName: string) => {
+    switch (badgeName) {
+      case 'PYTHON':
+        return '/src/assets/Python-logo.png';
+      case 'SQL':
+        return '/src/assets/SQL-logo.png';
+      default:
+        return ''; // Or a default placeholder image
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="w-8 h-8 rounded-full border-2 border-[#8b5cf6]/20 hover:border-[#8b5cf6]/40 transition-all duration-300 flex items-center justify-center overflow-hidden">
+        <img 
+          src={getAssetPath(name)}
+          alt={name}
+          className="w-5 h-5 object-contain"
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default ActionButtons;

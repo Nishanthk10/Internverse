@@ -1,13 +1,14 @@
 import React from 'react';
+import logo from '../assets/Internverse Logo.png';
 
 const BrandingSection: React.FC = () => {
   return (
     <div className="flex flex-col justify-center h-full p-8 md:p-12 lg:p-16">
       <div className="flex items-center gap-4 mb-4 animate-fade-in-up">
         <img 
-          src="https://cdn.jsdelivr.net/gh/stackblitz/internverse-assets/logo-white.png" 
+          src={logo} 
           alt="InternVerse Logo" 
-          className="w-12 h-12"
+          className="w-20 h-20"
         />
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
           InternVerse

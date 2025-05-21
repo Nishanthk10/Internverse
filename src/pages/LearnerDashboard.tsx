@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import ProgressHeader from '../components/ProgressHeader';
 import ActionButtons from '../components/ActionButtons';
@@ -9,6 +9,58 @@ interface LearnerDashboardProps {
 }
 
 const LearnerDashboard: React.FC<LearnerDashboardProps> = ({ onLogout }) => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userData = localStorage.getItem('userData');
+      const authId = localStorage.getItem('authId');
+      const userType = localStorage.getItem('userType');
+
+      if (userData) {
+        setLoading(false);
+        return;
+      }
+
+      if (!authId || !userType || userType !== 'intern') {
+        console.warn('Missing or invalid authId/userType');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/dashboard/${userType}/${authId}`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+
+        const newUserData = {
+          name: data.name,
+          streak: data.streak,
+          progress_perc: data.progress_perc,
+          python_button_status: data.python_button_status,
+          sql_button_status: data.sql_button_status,
+          status: data.status,
+        };
+
+        localStorage.setItem('userData', JSON.stringify(newUserData));
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="h-screen flex items-center justify-center bg-[#0F0721] text-white text-xl">
+        Loading...
+      </div>
+    );
+  }
+
   return (
     <div className="h-screen bg-[#0F0721] flex flex-col">
       {/* Background flares */}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { User, Lock } from 'lucide-react';
-import UserTypeSelector, { UserType } from './UserTypeSelector';
+import UserTypeSelector, { UserType } from './UserTypeSelector'; // Assuming UserType is still needed
 
 interface LoginFormProps {
   onLogin: () => void;
@@ -11,21 +11,46 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onAdminLogin, onCoordinatorLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState<UserType>('learner');
+  const [userType, setUserType] = useState<UserType>('intern');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
+    const loginEndpoint = 'http://127.0.0.1:8000/auth/login';
+
     if (userType === 'admin' && username === 'admin' && password === 'admin') {
       onAdminLogin();
-    } else if (userType === 'coordinator' && username === 'lc' && password === 'lc') {
-      onCoordinatorLogin();
-    } else if (userType === 'learner' && username === 'test' && password === 'test') {
-      onLogin();
     } else {
-      setError('Invalid credentials');
+      setLoading(true);
+      fetch(loginEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userid: username,
+          password: password,
+          role: userType,
+        }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.authenticated) {
+          localStorage.setItem('authId', data.id); // Store the id in local storage
+          localStorage.setItem('userType', userType); // Store the user type in local storage
+          userType === 'intern' ? onLogin() : onCoordinatorLogin();
+        } else {
+          setError('Invalid credentials');
+        }
+      })
+      .catch(() => { // Simplified error handling for fetch
+        setError('Login failed. Please try again.');
+      }).finally(() => {
+        setLoading(false);
+      });
     }
   };
 
@@ -77,9 +102,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onAdminLogin, onCoordina
         
         <button
           type="submit"
-          className="w-full py-3 px-4 bg-[#8b5cf6] hover:bg-[#7C3AED] focus:ring-4 focus:ring-[#8b5cf6]/50 text-white font-medium rounded-lg transition-all duration-300 transform hover:translate-y-[-2px]"
+          disabled={loading}
+          className="w-full py-3 px-4 bg-[#8b5cf6] hover:bg-[#7C3AED] focus:ring-4 focus:ring-[#8b5cf6]/50 text-white font-medium rounded-lg transition-all duration-300 transform hover:translate-y-[-2px] disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Log In
+          {loading ? 'Logging In...' : 'Log In'}
         </button>
       </form>
     </div>

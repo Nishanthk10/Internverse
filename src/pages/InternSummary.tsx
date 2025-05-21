@@ -103,7 +103,7 @@ const InternSummary: React.FC = () => {
   return (
     <div className="h-[calc(100vh-6rem)] max-w-6xl mx-auto grid grid-rows-[auto_1fr] gap-3">
       {/* Header Section */}
-      <div className="bg-[#161042]/60 backdrop-blur-sm rounded-lg p-3 border border-[#8b5cf6]/20">
+      <div className="bg-[#161042]/60 backdrop-blur-sm rounded-lg p-3 pb-10 border border-[#8b5cf6]/20">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <UserCircle size={40} className="text-[#8b5cf6]" strokeWidth={1} />
@@ -117,7 +117,7 @@ const InternSummary: React.FC = () => {
             <select 
               value={selectedCourse}
               onChange={(e) => setSelectedCourse(e.target.value)}
-              className="bg-[#0F0721] text-white border border-[#8b5cf6]/30 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b5cf6]"
+              className="bg-[#0F0721] text-white border border-[#8b5cf6]/30 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b5cf6] hover:border-[#a78bfa] focus:ring-1 focus:ring-[#8b5cf6]"
             >
               {courses.map(course => (
                 <option key={course} value={course}>{course}</option>
@@ -126,7 +126,7 @@ const InternSummary: React.FC = () => {
             <select 
               value={selectedIntern}
               onChange={(e) => setSelectedIntern(e.target.value)}
-              className="bg-[#0F0721] text-white border border-[#8b5cf6]/30 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b5cf6]"
+              className="bg-[#0F0721] text-white border border-[#8b5cf6]/30 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-[#8b5cf6] hover:border-[#a78bfa] focus:ring-1 focus:ring-[#8b5cf6]"
             >
               {interns.map(intern => (
                 <option key={intern} value={intern}>{intern}</option>
@@ -136,7 +136,7 @@ const InternSummary: React.FC = () => {
         </div>
 
         {/* Progress Timeline */}
-        <div className="mt-8 px-8">
+        <div className="mt-4 px-8">
           <div className="flex items-center justify-between">
             {units.map((unit, index) => {
               const isCompleted = index <= 1;
@@ -153,7 +153,7 @@ const InternSummary: React.FC = () => {
                             : 'bg-white border-2 border-[#8b5cf6]/20'
                         }`}
                       />
-                      <span className="absolute top-6 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap">{unit}</span>
+                      <span className="absolute top-4 left-1/2 -translate-x-1/2 text-sm whitespace-nowrap">{unit}</span>
                     </div>
                     {!isLast && (
                       <div 
@@ -173,7 +173,7 @@ const InternSummary: React.FC = () => {
       {/* Content Grid */}
       <div className="grid grid-cols-3 gap-3">
         {/* Intern Metrics */}
-        <div className="bg-[#161042]/60 backdrop-blur-sm rounded-lg p-3 border border-[#8b5cf6]/20">
+        <div className="bg-[#161042]/60 backdrop-blur-sm rounded-lg px-3 py-1 border border-[#8b5cf6]/20">
           <h3 className="text-base font-semibold mb-4">Intern Metrics</h3>
           <div className="space-y-4">
             <MetricItem label="Average Quiz Score" value={metrics.averageScore} />
@@ -184,13 +184,13 @@ const InternSummary: React.FC = () => {
         </div>
 
         {/* Assessment Score */}
-        <div className="col-span-2 bg-[#161042]/60 backdrop-blur-sm rounded-lg p-3 border border-[#8b5cf6]/20">
+        <div className="col-span-2 bg-[#161042]/60 backdrop-blur-sm rounded-lg px-3 py-1 border border-[#8b5cf6]/20">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-base font-semibold">Assessment Score</h3>
             <select 
               value={selectedUnit}
               onChange={(e) => setSelectedUnit(e.target.value)}
-              className="bg-[#0F0721] text-white border border-[#8b5cf6]/30 rounded-lg px-2 py-1 text-sm focus:outline-none focus:border-[#8b5cf6]"
+              className="bg-[#0F0721] text-white border border-[#8b5cf6]/30 rounded-lg px-2 py-1 text-sm focus:outline-none focus:border-[#8b5cf6] hover:border-[#a78bfa] focus:ring-1 focus:ring-[#8b5cf6]"
             >
               {units.map(unit => (
                 <option key={unit} value={unit}>{unit}</option>
